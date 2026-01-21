@@ -1,36 +1,37 @@
 # Username Enumeration Script (Auto-Detect)
 
-This Bash script performs username enumeration against a web login form by analyzing how an application responds to valid versus invalid usernames.
-It automatically detects response differences and adjusts its detection logic without relying on hardcoded strings.
-
+This Bash script performs username enumeration against a web login form.
 The script is intended for lab environments, security testing, and educational purposes only.
 
 ---
 
 ## Features
 
-* Automatic detection of valid vs invalid username responses
-* Supports both response-length and response-content detection
 * Parallelized requests for improved performance
 * Live progress display during enumeration
 * Optional custom wordlist support
-* No hardcoded error messages required
-* Designed for predictable and reproducible results in lab environments
 
 ---
 
 ## How It Works
 
-1. Sends a login request using:
+The script submits login requests using usernames from a wordlist
 
-   * A likely valid username (first entry in the wordlist)
-   * A guaranteed invalid username
-2. Compares the responses
-3. Automatically determines the best detection method:
+For each request, the HTTP response is analyzed to determine whether the username is valid.
 
-   * Response length (preferred)
-   * Unique response string (fallback)
-4. Runs the enumeration using the detected logic
+A username is considered valid when:
+
+  The response contains a string that indicates an existing user (by default: Wrong password)
+
+The response string used to identify valid usernames can be:
+
+  The default hardcoded value (Wrong password)
+
+  A custom value provided by the user at runtime
+
+Requests are sent in parallel to improve performance, and progress is displayed live during execution.
+
+Usernames that meet the detection criteria are reported as valid.
 
 ---
 
